@@ -1,5 +1,5 @@
 
-WayToData <- "~/WorkSc/Луч/Деконструкция/Code/Data/Луч Глава 5.xlsx"
+WayToData <- "~/3dPlaning_RadiusOsteotomy/Луч Глава 5.xlsx"
 
 Side3ch <- 'LEFT'
 
@@ -14,7 +14,7 @@ DorsalDeformation <- 'дорсальная'
 PalmarDeformation <-'ладонная'
 
 
-FileName <- "~/WorkSc/Луч/Деконструкция/Code/Текст_3dRadius.txt"
+FileName <- "~/3dPlaning_RadiusOsteotomy/Текст_3dRadius.txt"
 
 
 #Met3_group
