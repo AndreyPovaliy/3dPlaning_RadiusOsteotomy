@@ -1,13 +1,3 @@
-#####library####
-#подключаем библитеку для чтения exel
-library(openxlsx)
-#подключаем библитеку для работы со статистическими данными
-library(psych)
-#подключаем библитеку для работы с ggplot2
-library(ggplot2)
-
-setwd("~/WorkSc/Луч/Деконструкция/Code")
-
 #####FUNCTIONS####
 #приемер: escrAlgo ("Запись1")
 escrAlgo <- function(a) {
@@ -425,4 +415,3 @@ Res_groups<-function(group1,group2,sample1,subsample1){
 }
 
 
-setwd("~/")

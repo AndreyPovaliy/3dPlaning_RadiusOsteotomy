@@ -20,7 +20,7 @@ dfRadBillat1 <-  subset(dfRadBillat, Side == Side3ch)
 ######4#####
 dfRadProt<- read.xlsx(xlsxFile = WayToData,
                       sheet = '4')
-dfRadProt1 <-  subset(dfRadProt, Stage == 'PostOp')
+dfRadProt1 <-  subset(dfRadProt, Stage == Stage4ch)
 
 ######5#####
 dfRad<- read.xlsx(xlsxFile = WayToData,

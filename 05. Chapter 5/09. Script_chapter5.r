@@ -1,13 +1,3 @@
-#####library####
-#подключаем библитеку для чтения exel
-library(openxlsx)
-#подключаем библитеку для работы со статистическими данными
-library(psych)
-#подключаем библитеку для работы с ggplot2
-library(ggplot2)
-
-setwd("~/WorkSc/Луч/Деконструкция/Code")
-
 
 ####Глава 5####
 escrAlgo(print(paste("В этой главе буду представлены результаты клинического исследования. Были исследованы результаты лечения, полученных с февраля 2017 г. по апрель 2020 года, ",length(dfRad$name)," пациентов (",data.frame(table(dfRad$Gender))[2,2]," мужчин, ",data.frame(table(dfRad$Gender))[1,2]," женщина), ",length(dfRad$name)," разных верхних конечностей. 
@@ -20,5 +10,3 @@ Res_groups(gr1_domNo,gr2_domNo,domNo,"в подгруппе повреждени
 Res_groups(gr1_defDors,gr2_defDors,defDors,"в подгруппе дорсальной деформации руки")
 Res_groups(gr1_defPalm,gr2_defPalm,defPalm,"в подгруппе ладонной деформации руки")
 
-
-setwd("~/")
