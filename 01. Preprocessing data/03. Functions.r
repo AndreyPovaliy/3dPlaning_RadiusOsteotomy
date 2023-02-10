@@ -143,6 +143,33 @@ pvalueQualitative <-  function(x,y){
 #Quantity_table("Группа",dfRad$Side,dfRad$Group) 
 Quantity_table<-function(parametr,database,group){
   n <- length(data.frame(table(database), row.names = TRUE )$Freq)
+    Descr<-print(paste(parametr,"*Процентная доля*ДИ*","p-value","
+    "))
+  write.table(Descr, FileName, sep="*", append = TRUE)
+  i<-0
+  while (i<n){
+    Descr<-print(paste(data.frame(table(database))[i+1,1],
+                       "*",
+                       data.frame(round(prop.table(table(database)),2))[i+1,2],
+                       "% (", 
+                       data.frame(table(database))[i+1,2],
+                       "/",length(database),
+                       " случаев)*",
+                       "[95% ДИ",
+                       round(prop.test(table(database)[i+1], length(database))$conf.int[1],2),
+                       ";",
+                       round(prop.test(table(database)[i+1], length(database))$conf.int[2],2),
+                       "]."
+    ))
+    write.table(Descr, FileName, sep="*", append = TRUE)
+    i<-i+1
+    
+  }
+}
+
+#Quantity_tableP("Группа",dfRad$Side,dfRad$Group) 
+Quantity_tableP<-function(parametr,database,group){
+  n <- length(data.frame(table(database), row.names = TRUE )$Freq)
   val <- pvalueQualitative(database,group)
   Descr<-print(paste(parametr,"*Процентная доля*ДИ*","p-value",val,"
     "))
@@ -251,6 +278,27 @@ Pvalue_numeric<-function(database,dev){
 
 # приемер:Table_numeric2("возраст",dfRad$Age, dfRad$Group)
 Table_numeric2<-function(parametr,database,dev)
+{
+  if( shapiro.test(database)$p.value> 0.05
+  )
+  {
+    mean1<-round(mean(database, na.rm = TRUE),2)
+    sd1<-round(sd(database, na.rm = TRUE),2)
+    Descr<-print(paste(parametr,"*",mean1 ,"±",sd1), sep="")
+    write.table(Descr, FileName, sep="*", append = TRUE)
+  }
+  else
+  {
+    median1<-round(median(database, na.rm = TRUE),2)
+    quan1<-summary(database, na.rm = TRUE)
+    
+    Descr<-print(paste(parametr,"*",median1 ,"[ Q1-Q3:",round(quan1[2],2),";",round(quan1[5],2),"]"), sep="")
+    write.table(Descr, FileName, sep="*", append = TRUE)
+  }
+}
+
+# приемер:Table_numericP2("возраст",dfRad$Age, dfRad$Group)
+Table_numericP2<-function(parametr,database,dev)
 {
   if( shapiro.test(database)$p.value> 0.05
   )
