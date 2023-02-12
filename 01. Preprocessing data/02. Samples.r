@@ -46,5 +46,3 @@ defPalm<- subset(dfRad, Type_deformation == PalmarDeformation)
 gr1_defPalm<- subset(defPalm, Group == Control)
 gr2_defPalm<- subset(dfRad, Group == Protocol_3d)
 
-
-setwd("~/")

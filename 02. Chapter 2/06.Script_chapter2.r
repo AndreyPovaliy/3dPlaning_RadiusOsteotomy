@@ -4,6 +4,19 @@
 ######3#####
 escribir("Сравнение на основе изображений компьютерной томографии двусторонней симметрии дистального метаэпифиза лучевой кости")
 
+ 
+Describe_numericText (dfRadBillat1$Age, "возраст ","пациентов, вошедших в исследование, составил "," лет")
+Describe_numericText (dfRadBillat1$BMI, "ИМТ ","пациентов, вошедших в исследование, составил "," кг/м2")
+Quantity_discr("Распределение по полу ",dfRadBillat1$Gender)	
+Quantity_discr("Распределение по типу активности  ",dfRadBillat1$Type_action)
+
+escribir("Таблица 2.1. Описание показателей возраста, ИМТ, пола, типа активности во всей выборке. Пример записи: процент от выборки % ( количество случаев / общее количество  случаев)* [95% доверительный интервал]")
+Table_numeric2("возраст",dfRadBillat1$Age, dfRadBillat1$Side)
+Table_numeric2("ИМТ",dfRadBillat1$BMI, dfRadBillat1$Side)
+Quantity_table("Пол",dfRadBillat1$Gender,dfRadBillat1$Side) 
+Quantity_table("Тип активности",dfRadBillat1$Type_action,dfRadBillat1$Side)
+
+
 
 
 

@@ -1,13 +1,3 @@
-#####library####
-#подключаем библитеку для чтения exel
-library(openxlsx)
-#подключаем библитеку для работы со статистическими данными
-library(psych)
-#подключаем библитеку для работы с ggplot2
-library(ggplot2)
-
-setwd("~/WorkSc/Луч/Деконструкция/Code")
-
 ####PLOTS####
 
 #визуализация нормальности
@@ -67,5 +57,3 @@ Violinplot<-function(database, sample1, sample2, parametr1, parametr2){
   
 }
 
-
-setwd("~/")
