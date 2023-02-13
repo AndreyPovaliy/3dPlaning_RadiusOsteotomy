@@ -7,7 +7,20 @@ dfRadBillat$Gender	<- factor(dfRadBillat$Gender,
                                "2"="Мужской"
                              ))	
 
+dfRadBillat1$Gender	<- factor(dfRadBillat1$Gender, 
+                             levels=c(1, 2),
+                             labels = c(
+                               "1"="Женский",
+                               "2"="Мужской"
+                             ))	
+
 dfRadBillat$Type_action 	<- factor(dfRadBillat$Type_action, 
+                                   levels=c(1, 2),
+                                   labels = c(
+                                     "1"="Смешанный",
+                                     "2"="Ручной"
+                                   ))
+dfRadBillat1$Type_action 	<- factor(dfRadBillat1$Type_action, 
                                    levels=c(1, 2),
                                    labels = c(
                                      "1"="Смешанный",
@@ -21,7 +34,12 @@ dfRadBillat$Side<- factor(dfRadBillat$Side,
                             "2"="Правая"
                           ))
 
-
+dfRadBillat1$Side<- factor(dfRadBillat1$Side, 
+                          levels=c(1, 2),
+                          labels = c(
+                            "1"="Левая",
+                            "2"="Правая"
+                          ))
 
 
 ####4ch######

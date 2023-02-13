@@ -4,20 +4,425 @@ author: "Турбин К.О, Акулавев А.А., Повалий А.А."
 date: ""
 output: html_document
 ---
+
 ```{r, echo=FALSE}
 library(openxlsx)
-dfRadBillat<- read.xlsx(xlsxFile = "~/3dPlaning_RadiusOsteotomy/Луч Глава 5.xlsx",
-                  sheet = '3')
-dfRadProt<- read.xlsx(xlsxFile = "~/3dPlaning_RadiusOsteotomy/Луч Глава 5.xlsx",
-                  sheet = '4')
-dfRad<- read.xlsx(xlsxFile = "~/3dPlaning_RadiusOsteotomy/Луч Глава 5.xlsx",
+
+WayToData <- "~/3dPlaning_RadiusOsteotomy/01. Preprocessing data/Луч Глава 5.xlsx"
+
+Side3ch <- '1'
+
+Stage4ch <- '1'
+
+
+Control <- '1'
+Protocol_3d <- '2'
+Dominant <- '1'
+NoDominant <- '2'
+DorsalDeformation <- '1'
+PalmarDeformation <-'2'
+
+
+FileName <- "~/3dPlaning_RadiusOsteotomy/Текст_3dRadius.txt"
+######3#####
+dfRadBillat<- read.xlsx(xlsxFile = WayToData,
+                        sheet = '3')
+dfRadBillat1 <-  subset(dfRadBillat, Side == Side3ch)
+
+######4#####
+dfRadProt<- read.xlsx(xlsxFile = WayToData,
+                      sheet = '4')
+dfRadProt1 <-  subset(dfRadProt, Stage == Stage4ch)
+
+######5#####
+dfRad<- read.xlsx(xlsxFile = WayToData,
                   sheet = '5')
+
+gr1<- subset(dfRad, Group == Control)
+gr2<- subset(dfRad, Group == Protocol_3d)
+
+
+domYes<- subset(dfRad, Damage_dominant_hand == Dominant)
+gr1_domYes<- subset(domYes, Group == Control)
+gr2_domYes<- subset(domYes, Group == Protocol_3d)
+
+domNo<- subset(dfRad, Damage_dominant_hand == NoDominant)
+gr1_domNo<- subset(domNo, Group == Control)
+gr2_domNo<- subset(domNo, Group == Protocol_3d)
+
+defDors<- subset(dfRad, Type_deformation == DorsalDeformation)
+gr1_defDors<- subset(defDors, Group == Control)
+gr2_defDors<- subset(defDors, Group == Protocol_3d)
+
+defPalm<- subset(dfRad, Type_deformation == PalmarDeformation)
+gr1_defPalm<- subset(defPalm, Group == Control)
+gr2_defPalm<- subset(dfRad, Group == Protocol_3d)
 ```
+
+```{r, echo=FALSE}
+#####FUNCTIONS####
+#приемер: escribir ("Запись1")
+escribir <- function(a) {
+  
+  pr <- print(a)
+  write.table(pr, FileName, sep="*", append = TRUE)
+  
+}
+
+#приемер: escribirPaste ("Запись2")
+escribirPaste <- function(a) {
+  
+  pr <- print(paste((a)))
+  write.table(pr, FileName, sep="*", append = TRUE)
+  
+}
+
+
+#приемер: How_many(dfRad$ID,"Всего в исследование вошло")
+How_many<-function(a,b)
+{
+  количество_пациентов<-length(a)
+  Опиние_количества<-print(paste(b,количество_пациентов, "пациентов."))
+  write.table(Опиние_количества, FileName, sep="*", append = TRUE)
+}
+
+
+
+# приемер:Describe_numeric_Norm (dfRad$Age, "возраст ","пациентов по всей выборке составил "," лет")
+Describe_numeric_Norm<-function(database,parametr,sample1,mesurement)
+{
+  mean1<-round(mean(database, na.rm = TRUE),2)
+  sd1<-round(sd(database, na.rm = TRUE),2)
+  Descr<-print(paste("Средний ", parametr ,sample1,mean1 ,"±",sd1, mesurement,".", sep=""))
+  write.table(Descr, FileName, sep="*", append = TRUE)
+}
+# приемер:Describe_numeric_NoNorm (dfRad$Age, "возраста ","пациентов по всей выборке составила "," лет")
+Describe_numeric_NoNorm<-function(database,parametr,sample1,mesurement)
+{
+  median1<-round(median(database, na.rm = TRUE),2)
+  quan1<-summary(database, na.rm = TRUE)
+  Descr<-print(paste("Медиана ", parametr ,sample1,median1 ," [Q1-Q3: ",round(quan1[2],2),";",round(quan1[5],2),"]", mesurement,".", sep=""))
+  write.table(Descr, FileName, sep="*", append = TRUE)
+}
+
+
+# приемер:Table_numeric_Normal("возраст",dfRad$Age, dfRad$Group)
+Table_numeric_Normal<-function(parametr,database,dev )
+{
+  mean1<-round(mean(database, na.rm = TRUE),2)
+  sd1<-round(sd(database, na.rm = TRUE),2)
+  p_value <- round(as.numeric(t.test(database ~ dev)[3]),2)
+  Descr<-print(paste(parametr,"*",mean1 ,"±",sd1,"*", p_value), sep="")
+  write.table(Descr, FileName, sep="*", append = TRUE)
+}
+
+
+
+
+
+# приемер:Table_numeric_NoNormal("возраст",dfRad$Age, dfRad$Group)
+Table_numeric_NoNormal<-function(parametr,database,dev )
+{
+  median1<-round(median(database, na.rm = TRUE),2)
+  quan1<-summary(database, na.rm = TRUE)
+  p_value <- round(as.numeric(wilcox.test(database ~ dev)[3]),2)
+  Descr<-print(paste(parametr,"*",median1 ,"[ Q1-Q3:",round(quan1[2],2),";",round(quan1[5],2),"]","*", p_value), sep="")
+  write.table(Descr, FileName, sep="*", append = TRUE)
+}
+
+
+
+# приемер:Table_numericANOV ("возраст",dfRad$Age, dfRad$Group)
+Table_numericANOV<-function(parametr,database,dev )
+{
+  mean1<-round(mean(database, na.rm = TRUE),2)
+  sd1<-round(sd(database, na.rm = TRUE),2)
+  p_value <- round(as.numeric(summary(aov(database ~ dev))[[1]][["Pr(>F)"]][1],2))
+  Descr<-print(paste(parametr,"*",mean1 ,"±",sd1,"*", p_value))
+  write.table(Descr, FileName, sep="*", append = TRUE)
+}
+
+# приемер:Table_numericKr("возраст",dfRad$Age, dfRad$Group)
+Table_numericKr<-function(parametr,database,dev )
+{
+  median1<-round(median(database, na.rm = TRUE),2)
+  quan1<-summary(database, na.rm = TRUE)
+  p_value <- round(as.numeric(kruskal.test(database ~ dev)[3]),2)
+  Descr<-print(paste(parametr,"*",median1 ,"[ Q1-Q3:",round(quan1[2],2),";",round(quan1[5],2),"]","*", p_value))
+  write.table(Descr, FileName, sep="*", append = TRUE)
+}
+
+
+
+
+
+#Quantity_discr("В группе ",dfRad$Group)
+Quantity_discr<-function(parametr,database){
+  n <- length(data.frame(table(database), row.names = TRUE )$Freq)
+  i<-0
+  while (i<n){
+    Descr<-print(paste(parametr,
+                       data.frame(table(database))[i+1,1],
+                       " было ",
+                       data.frame(round(prop.table(table(database))*100,2))[i+1,2],
+                       "% (", 
+                       data.frame(table(database))[i+1,2],
+                       "/",length(database),
+                       "случаев)",
+                       "[95% ДИ ",
+                       round(prop.test(table(database)[i+1], length(database))$conf.int[1],2),
+                       ";",
+                       round(prop.test(table(database)[i+1], length(database))$conf.int[2],2),
+                       "]."
+                       , sep=""))
+    write.table(Descr, FileName, sep="*", append = TRUE)
+    i<-i+1
+    
+  }
+}
+
+
+#приемер: pvalueQualitative(dfRad$Side,dfRad$Group)
+pvalueQualitative <-  function(x,y){
+  if(
+    min(table(x)>5)
+    
+  )
+  {
+    S_Table <-chisq.test(table(x,y), simulate.p.value = TRUE)$p.value
+    S_Table <- round(as.numeric(S_Table),2)
+    
+      
+  }
+  else{
+    S_Table <-fisher.test(table(x,y), simulate.p.value = TRUE)$p.value
+    S_Table <- round(as.numeric(S_Table),2)
+    
+    
+  }
+}
+
+#Quantity_table("Группа",dfRad$Side,dfRad$Group) 
+Quantity_table<-function(parametr,database,group){
+  n <- length(data.frame(table(database), row.names = TRUE )$Freq)
+    Descr<-print(paste(parametr,"*Процентная доля*ДИ*","p-value","
+    "))
+  write.table(Descr, FileName, sep="*", append = TRUE)
+  i<-0
+  while (i<n){
+    Descr<-print(paste(data.frame(table(database))[i+1,1],
+                       "*",
+                       data.frame(round(prop.table(table(database)),2))[i+1,2],
+                       "% (", 
+                       data.frame(table(database))[i+1,2],
+                       "/",length(database),
+                       " случаев)*",
+                       "[95% ДИ",
+                       round(prop.test(table(database)[i+1], length(database))$conf.int[1],2),
+                       ";",
+                       round(prop.test(table(database)[i+1], length(database))$conf.int[2],2),
+                       "]."
+    ))
+    write.table(Descr, FileName, sep="*", append = TRUE)
+    i<-i+1
+    
+  }
+}
+
+#Quantity_tableP("Группа",dfRad$Side,dfRad$Group) 
+Quantity_tableP<-function(parametr,database,group){
+  n <- length(data.frame(table(database), row.names = TRUE )$Freq)
+  val <- pvalueQualitative(database,group)
+  Descr<-print(paste(parametr,"*Процентная доля*ДИ*","p-value",val,"
+    "))
+  write.table(Descr, FileName, sep="*", append = TRUE)
+  i<-0
+  while (i<n){
+    Descr<-print(paste(data.frame(table(database))[i+1,1],
+                       "*",
+                       data.frame(round(prop.table(table(database)),2))[i+1,2],
+                       "% (", 
+                       data.frame(table(database))[i+1,2],
+                       "/",length(database),
+                       " случаев)*",
+                       "[95% ДИ",
+                       round(prop.test(table(database)[i+1], length(database))$conf.int[1],2),
+                       ";",
+                       round(prop.test(table(database)[i+1], length(database))$conf.int[2],2),
+                       "]."
+    ))
+    write.table(Descr, FileName, sep="*", append = TRUE)
+    i<-i+1
+    
+  }
+}
+
+
+
+#pvalue сравнения качественных данных
+#приемер: pvalueQualitativeText(dfRad$Side,dfRad$Group,"по стороне поражения")
+pvalueQualitativeText <-  function(x,y,parametr1){
+  if(
+    min(table(x)>5)
+    
+  )
+  {
+    S_Table <-chisq.test(table(x,y), simulate.p.value = TRUE)$p.value
+    S_Table <- round(as.numeric(S_Table),2)
+    Описание<-print(paste("Разница между группами", parametr1," составила",S_Table, "."))
+    write.table(Описание, FileName, sep="*", append = TRUE)  
+  }
+  else{
+    S_Table <-fisher.test(table(x,y), simulate.p.value = TRUE)$p.value
+    S_Table <- round(as.numeric(S_Table),2)
+    Описание<-print(paste("Разница между группами", parametr1," составила",S_Table, "."))
+    write.table(Описание, FileName, sep="*", append = TRUE) 
+    
+  }
+}  
+
+
+
+
+
+
+#pvalue сравнения непарметрич данных (kruskal.test)
+#приемер: pvalueParaKrText(dfRad,dfRad$Age,dfRad$Group,"по возрасту")
+pvalueParaKrText <-function(database,x,y, parametr1)
+{
+  kruskal<-round(as.numeric(kruskal.test(x ~ y, data=database)[3]),2)
+  Описание<-print(paste("Разница между группами", parametr1," составила",kruskal, "."))
+  write.table(Описание, FileName, sep="*", append = TRUE)
+}
+
+#pvalue сравнения непарметрич данных (wilcox.test)
+#приемер: pvalueParaWxText(dfRad,dfRad$Age,dfRad$Group,"по возрасту")
+pvalueParaWxText <-function(database,x,y, parametr1)
+{
+  wilcox<-round(as.numeric(wilcox.test(x ~ y, data=database)[3]),2)
+  Описание<-print(paste("Разница между группами", parametr1," составила",wilcox, "."))
+  write.table(Описание, FileName, sep="*", append = TRUE)
+}
+
+
+
+
+
+
+#####COMB FUNCTIONS####
+# приемер:Describe_numericText (dfRad$Age, "возраст","пациентов по всей выборке составил","лет")
+Describe_numericText<-function(database,parametr,sample1,mesurement){
+  if( shapiro.test(database)$p.value> 0.05
+  ){
+    Describe_numeric_Norm(database,parametr,sample1,mesurement)
+    
+  }
+  else{
+    Describe_numeric_NoNorm(database,parametr,sample1,mesurement)
+    
+  }
+  
+}
+
+# приемер:Pvalue_numeric(dfRad$Age,dfRad$Group)
+Pvalue_numeric<-function(database,dev){
+  if( shapiro.test(database)$p.value> 0.05
+  ){
+    p_value <- round(as.numeric(t.test(database~ dev)[3]),2)
+    p_value
+  }
+  else{
+    p_value <- round(as.numeric(wilcox.test(database~ dev)[3]),2)
+    p_value
+  }
+  
+}
+
+# приемер:Table_numeric2("возраст",dfRad$Age, dfRad$Group)
+Table_numeric2<-function(parametr,database,dev)
+{
+  if( shapiro.test(database)$p.value> 0.05
+  )
+  {
+    mean1<-round(mean(database, na.rm = TRUE),2)
+    sd1<-round(sd(database, na.rm = TRUE),2)
+    Descr<-print(paste(parametr,"*",mean1 ,"±",sd1), sep="")
+    write.table(Descr, FileName, sep="*", append = TRUE)
+  }
+  else
+  {
+    median1<-round(median(database, na.rm = TRUE),2)
+    quan1<-summary(database, na.rm = TRUE)
+    
+    Descr<-print(paste(parametr,"*",median1 ,"[ Q1-Q3:",round(quan1[2],2),";",round(quan1[5],2),"]"), sep="")
+    write.table(Descr, FileName, sep="*", append = TRUE)
+  }
+}
+
+# приемер:Table_numericP2("возраст",dfRad$Age, dfRad$Group)
+Table_numericP2<-function(parametr,database,dev)
+{
+  if( shapiro.test(database)$p.value> 0.05
+  )
+  {
+    Table_numeric_Normal(parametr,database,dev )
+  }
+  else
+  {
+    Table_numeric_NoNormal(parametr,database,dev)
+  }
+}
+
+# приемер: TextPvalue(pvalueQualitative(dfRad$Side,dfRad$Group),"По стороне поражения" )
+#TextPvalue(Pvalue_numeric(dfRad$Age,dfRad$Group),"По возрасту" )
+
+TextPvalue<- function(fun, parametr1)
+{
+  if (fun<0.05)
+    {
+    Descr <- print(paste(parametr1," обнаружено статистически значимое различие p-уровень=",fun))
+    write.table(Descr, FileName, sep="*", append = TRUE)
+  }
+  else
+  {
+    Descr <-print(paste(parametr1," не обнаружено статистически значимых различий."))
+    write.table(Descr, FileName, sep="*", append = TRUE)
+  }
+  
+}
+
+
+#####SIMPLE FUNCTIONS####
+#Describe_numericSimp (dfRad$Age)
+Describe_numericSimp<-function(database){
+  if( shapiro.test(database)$p.value> 0.05
+  ){
+    mean1<-round(mean(database, na.rm = TRUE),2)
+    sd1<-round(sd(database, na.rm = TRUE),2)
+    Descr<-print(paste(mean1 ,"±",sd1, sep=""))
+    
+    
+  }
+  else{
+    median1<-round(median(database, na.rm = TRUE),2)
+    quan1<-summary(database, na.rm = TRUE)
+    Descr<-print(paste(median1 ," [Q1-Q3: ",round(quan1[2],2),";",round(quan1[5],2),"]", sep=""))
+    
+    
+  }
+  
+}
+
+```
+
 ## 2.1. Структура и общая характеристика диссертационного исследования
 
 ## 2.2. Первый этап экспериментальной части исследования
-В этом исследовании изучались  `r length(dfRadBillat$ID)/2`  моделей для количественной оценки морфологии дистального метаэпифиза лучевой кости, включая стандартные измерения, обычно выполняемые клинически с использованием плоских двухмерных рентгенограмм. Все модели были сделаны на основании МСКТ  17  пациенов дистального метаэпифиза лучевой кости правой и левой руки. Исследовались пациенты без повреждения дистального метаэпифиза в анамнезе. Возрат пациентов, участвующих в исследовании был  45.53 ± 10.57  лет. Минимальный возраст участвовашего в исследовании был  30 , максимальный  65 . В исследовании было  24 ( 71 %) пациентов, занятых перимущественно умственным и смешанным типом труда, и  10 ( 29 %) пациентов, занятых перимущественно мануальным трудом.
+
+В этом исследовании изучались `r length(dfRadBillat1$ID)` моделей для количественной оценки морфологии дистального метаэпифиза лучевой кости, включая стандартные измерения, обычно выполняемые клинически с использованием плоских двухмерных рентгенограмм. Все модели были сделаны на основании МСКТ `r length(dfRadBillat1$ID)` пациенов дистального метаэпифиза лучевой кости правой и левой руки. Исследовались пациенты без повреждения дистального метаэпифиза в анамнезе. Средний возраст пациентов, вошедших в исследование, составил `r round(mean(dfRadBillat1$Age),2)`±`r round(sd(dfRadBillat1$Age),2)` лет. Минимальный возраст участвовашего в исследовании был `r min(dfRadBillat1$Age)` лет, максимальный `r max(dfRadBillat1$Age)`. Процентная доля женщин составила 58.82% (20/34случаев)[95% ДИ 0.41;0.75], мужчин - 41.18% (14/34случаев)[95% ДИ 0.25;0.59]. По типу активности иследуемых процентная доля смешанного типа труда составила 70.59% (24/34случаев)[95% ДИ 0.52;0.84],  ручного типа труда - 29.41% (10/34случаев)[95% ДИ 0.16;0.48]. Основные показатели указаны в таблице 2.n.
+
 ## 2.3. Второй этап экспериментальной части исследования
 
 ## 3.3. Клиническая часть исследования
-##
+
+## 3.4

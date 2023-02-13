@@ -330,3 +330,23 @@ TextPvalue<- function(fun, parametr1)
 }
 
 
+#####SIMPLE FUNCTIONS####
+#Describe_numericSimp (dfRad$Age)
+Describe_numericSimp<-function(database){
+  if( shapiro.test(database)$p.value> 0.05
+  ){
+    mean1<-round(mean(database, na.rm = TRUE),2)
+    sd1<-round(sd(database, na.rm = TRUE),2)
+    Descr<-print(paste(mean1 ,"±",sd1, sep=""))
+    
+    
+  }
+  else{
+    median1<-round(median(database, na.rm = TRUE),2)
+    quan1<-summary(database, na.rm = TRUE)
+    Descr<-print(paste(median1 ," [Q1-Q3: ",round(quan1[2],2),";",round(quan1[5],2),"]", sep=""))
+    
+    
+  }
+  
+}
