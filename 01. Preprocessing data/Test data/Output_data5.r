@@ -101,38 +101,14 @@ Rg_Zv <- round((Rg_time*Rg_Zv_dose),2)
 
 
 ######Моделирование функции руки#####
-Flex_Ext_12	
+
 
 Diviation_gr1 <- round(rnorm(n= 24, mean= 40, sd= 5),0)
 Diviation_gr2 <- round(rnorm(n= 24, mean= 50, sd= 5),0)
 
 Diviation <- c(Diviation_gr1,Diviation_gr2)
 
-pron_sup_12	
 
-
-Grip_strength_12
-
-
-######Моделирование анатоморентгенологических данных#####
-
-
-Ri_MesD6	
-
-Vt_MesD6	
-
-Rh_MesD6
-
-
-
-
-Ri_MesD12	
-
-
-Vt_MesD12	
-
-
-Rh_MesD12
 
 
 
@@ -143,7 +119,7 @@ Rh_MesD12
 
 setwd("~/3dPlaning_RadiusOsteotomy")
 
-
+Diviation <- round(rnorm(n= 22, mean= 12, sd= 6),0)
 
 Output_data <- data.frame(cbind(Diviation))
 colnames(Output_data) <- c( "Дивиация")

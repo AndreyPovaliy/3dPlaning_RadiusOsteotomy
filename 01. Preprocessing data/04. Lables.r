@@ -49,8 +49,20 @@ dfRadProt$Gender <- factor(dfRadProt$Gender,
                          "1"="Женский",
                          "2"="Мужской"
                        ))
+dfRadProt1$Gender <- factor(dfRadProt1$Gender, 
+                           levels=c(1, 2),
+                           labels = c(
+                             "1"="Женский",
+                             "2"="Мужской"
+                           ))
 
 dfRadProt$Stage<- factor(dfRadProt$Stage, 
+                         levels=c(1, 2),
+                         labels = c(
+                           "1"="Виртуальное моделирование",
+                           "2"="После операции"
+                         ))
+dfRadProt1$Stage<- factor(dfRadProt1$Stage, 
                          levels=c(1, 2),
                          labels = c(
                            "1"="Виртуальное моделирование",
@@ -67,9 +79,23 @@ dfRadProt$Riint	<- factor(dfRadProt$Riint,
                             "1"="Меньше",
                             "2"="Норма",
                             "3"="Больше"
-                          ))	
+                          ))
+dfRadProt1$Riint	<- factor(dfRadProt1$Riint, 
+                          levels=c(1, 2, 3),
+                          labels = c(
+                            "1"="Меньше",
+                            "2"="Норма",
+                            "3"="Больше"
+                          ))
 
 dfRadProt$Vtint	<- factor(dfRadProt$Vtint, 
+                          levels=c(1, 2, 3),
+                          labels = c(
+                            "1"="Меньше",
+                            "2"="Норма",
+                            "3"="Больше"
+                          ))
+dfRadProt1$Vtint	<- factor(dfRadProt1$Vtint, 
                           levels=c(1, 2, 3),
                           labels = c(
                             "1"="Меньше",
@@ -85,6 +111,13 @@ dfRadProt$Rhint<- factor(dfRadProt$Rhint,
                            "2"="Норма",
                            "3"="Больше"
                          ))
+dfRadProt1$Rhint<- factor(dfRadProt1$Rhint, 
+                         levels=c(1, 2, 3),
+                         labels = c(
+                           "1"="Меньше",
+                           "2"="Норма",
+                           "3"="Больше"
+                         ))
 
 dfRadProt$Side <- factor(dfRadProt$Side, 
                      levels=c(1, 2),
@@ -92,6 +125,12 @@ dfRadProt$Side <- factor(dfRadProt$Side,
                        "1"="Левая",
                        "2"="Правая"
                      ))
+dfRadProt1$Side <- factor(dfRadProt1$Side, 
+                         levels=c(1, 2),
+                         labels = c(
+                           "1"="Левая",
+                           "2"="Правая"
+                         ))
 
 dfRadProt$Dominant_hand<- factor(dfRadProt$Dominant_hand, 
                              levels=c(1, 2),
@@ -99,6 +138,12 @@ dfRadProt$Dominant_hand<- factor(dfRadProt$Dominant_hand,
                                "1"="Левая",
                                "2"="Правая"
                              ))
+dfRadProt1$Dominant_hand<- factor(dfRadProt1$Dominant_hand, 
+                                 levels=c(1, 2),
+                                 labels = c(
+                                   "1"="Левая",
+                                   "2"="Правая"
+                                 ))
 
 dfRadProt$Damage_dominant_hand<- factor(dfRadProt$Damage_dominant_hand, 
                                     levels=c(1, 2),
@@ -106,6 +151,12 @@ dfRadProt$Damage_dominant_hand<- factor(dfRadProt$Damage_dominant_hand,
                                       "1"="Да",
                                       "2"="Нет"
                                     ))
+dfRadProt1$Damage_dominant_hand<- factor(dfRadProt1$Damage_dominant_hand, 
+                                        levels=c(1, 2),
+                                        labels = c(
+                                          "1"="Да",
+                                          "2"="Нет"
+                                        ))
 
 dfRadProt$Type_deformation<- factor(dfRadProt$Type_deformation, 
                                 levels=c(1, 2),
@@ -113,7 +164,12 @@ dfRadProt$Type_deformation<- factor(dfRadProt$Type_deformation,
                                   "1"="Дорсальная",
                                   "2"="Ладонная"
                                 ))
-
+dfRadProt1$Type_deformation<- factor(dfRadProt1$Type_deformation, 
+                                    levels=c(1, 2),
+                                    labels = c(
+                                      "1"="Дорсальная",
+                                      "2"="Ладонная"
+                                    ))
 
 
 

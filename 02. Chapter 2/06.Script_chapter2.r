@@ -25,6 +25,7 @@ Quantity_table("Тип активности",dfRadBillat1$Type_action,dfRadBilla
 escribir("Определение точности переноса данных с помощью индивидуального напечатанного шаблона направителя")
 
 Describe_numericText (dfRadProt1$Age, "возраст ","пациентов, вошедших в исследование, составил "," лет")
+Describe_numericText (dfRadProt1$Month, "Период после травмы ","пациентов, вошедших в исследование, составил "," месяцев")
 Quantity_discr("Распределение по полу ",dfRadProt1$Gender)
 Quantity_discr("Распределение по стороне поражения ",dfRadProt1$Side)
 Quantity_discr("Распределение по доминирующей руке ",dfRadProt1$Dominant_hand)

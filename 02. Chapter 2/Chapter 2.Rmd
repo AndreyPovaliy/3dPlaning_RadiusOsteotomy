@@ -417,12 +417,95 @@ Describe_numericSimp<-function(database){
 
 ## 2.1. Структура и общая характеристика диссертационного исследования
 
+### 2.1.n Основные анатомические и функциональные показатели, оцениваемые в исследовании
+
+### 2.1.n Описание МСКТ предплечий
+
+### 2.1.n Описание протокола предоперационного планирования
+
+### 2.1.n Описание хирургического вмешательства
+
+### 2.1.n Описание послеоперационного ведения
+
+### 2.1.n Контрольные точки
+
 ## 2.2. Первый этап экспериментальной части исследования
 
-В этом исследовании изучались `r length(dfRadBillat1$ID)` моделей для количественной оценки морфологии дистального метаэпифиза лучевой кости, включая стандартные измерения, обычно выполняемые клинически с использованием плоских двухмерных рентгенограмм. Все модели были сделаны на основании МСКТ `r length(dfRadBillat1$ID)` пациенов дистального метаэпифиза лучевой кости правой и левой руки. Исследовались пациенты без повреждения дистального метаэпифиза в анамнезе. Средний возраст пациентов, вошедших в исследование, составил `r round(mean(dfRadBillat1$Age),2)`±`r round(sd(dfRadBillat1$Age),2)` лет. Минимальный возраст участвовашего в исследовании был `r min(dfRadBillat1$Age)` лет, максимальный `r max(dfRadBillat1$Age)`. Процентная доля женщин составила 58.82% (20/34случаев)[95% ДИ 0.41;0.75], мужчин - 41.18% (14/34случаев)[95% ДИ 0.25;0.59]. По типу активности иследуемых процентная доля смешанного типа труда составила 70.59% (24/34случаев)[95% ДИ 0.52;0.84],  ручного типа труда - 29.41% (10/34случаев)[95% ДИ 0.16;0.48]. Основные показатели указаны в таблице 2.n.
+В этом исследовании изучались `r length(dfRadBillat1$ID)` моделей для количественной оценки морфологии дистального метаэпифиза лучевой кости, включая стандартные измерения, обычно выполняемые клинически с использованием плоских двухмерных рентгенограмм. Все модели были сделаны на основании МСКТ `r length(dfRadBillat1$ID)` пациенов дистального метаэпифиза лучевой кости правой и левой руки. Исследовались пациенты без повреждения дистального метаэпифиза в анамнезе. Средний возраст исследуемых, составил `r round(mean(dfRadBillat1$Age),2)`±`r round(sd(dfRadBillat1$Age),2)` лет. Минимальный возраст участвовашего в исследовании был `r min(dfRadBillat1$Age)` лет, максимальный `r max(dfRadBillat1$Age)`. Медиана ИМТ  исследуемых составила `r round(median(dfRadBillat1$BMI),2)` [Q1-Q3: `r round(summary(dfRadBillat1$BMI, na.rm = TRUE)[2],2)`; `r round(summary(dfRadBillat1$BMI, na.rm = TRUE)[5],2)`]. Процентная доля женщин составила `r  data.frame(round(prop.table(table(dfRadBillat1$Gender))*100,2))[1,2]`% (`r data.frame(table(dfRadBillat1$Gender))[1,2]`/`r length(dfRadBillat1$Gender)` случаев) [95% ДИ: `r round(prop.test(table(dfRadBillat1$Gender)[1], length(dfRadBillat1$Gender))$conf.int[1],2)`; `r round(prop.test(table(dfRadBillat1$Gender)[1], length(dfRadBillat1$Gender))$conf.int[2],2)`], мужчин - `r data.frame(round(prop.table(table(dfRadBillat1$Gender))*100,2))[2,2]`% (`r data.frame(table(dfRadBillat1$Gender))[2,2]`/`r length(dfRadBillat1$Gender)` случаев) [95% ДИ: `r round(prop.test(table(dfRadBillat1$Gender)[2], length(dfRadBillat1$Gender))$conf.int[1],2)`; `r round(prop.test(table(dfRadBillat1$Gender)[2], length(dfRadBillat1$Gender))$conf.int[2],2)`]. По типу активности иследуемых процентная доля смешанного типа труда составила `r  data.frame(round(prop.table(table(dfRadBillat1$Type_action))*100,2))[1,2]`% (`r data.frame(table(dfRadBillat1$Type_action))[1,2]`/`r length(dfRadBillat1$Type_action)` случаев) [95% ДИ: `r round(prop.test(table(dfRadBillat1$Type_action)[1], length(dfRadBillat1$Type_action))$conf.int[1],2)`; `r round(prop.test(table(dfRadBillat1$Type_action)[1], length(dfRadBillat1$Type_action))$conf.int[2],2)`], ручного типа труда - `r data.frame(round(prop.table(table(dfRadBillat1$Type_action))*100,2))[2,2]`% (`r data.frame(table(dfRadBillat1$Type_action))[2,2]`/`r length(dfRadBillat1$Type_action)` случаев) [95% ДИ: `r round(prop.test(table(dfRadBillat1$Type_action)[2], length(dfRadBillat1$Type_action))$conf.int[1],2)`; `r round(prop.test(table(dfRadBillat1$Type_action)[2], length(dfRadBillat1$Type_action))$conf.int[2],2)`]. Основные показатели указаны в таблице 2.n. 
+
+Таблица 2.n. Описание показателей возраста, ИМТ, пола, типа активности во всей выборке. Пример записи: процент от выборки % ( количество случаев / общее количество случаев) [95% доверительный интервал]
+
+| Показатель | Заначение                                                             |
+|----------------|-----------------------------------|
+| возраст    | `r round(mean(dfRadBillat1$Age),2)`±`r round(sd(dfRadBillat1$Age),2)` |
+|ИМТ|`r round(median(dfRadBillat1$BMI),2)` [Q1-Q3: `r round(summary(dfRadBillat1$BMI, na.rm = TRUE)[2],2)`; `r round(summary(dfRadBillat1$BMI, na.rm = TRUE)[5],2)`]|
+| Пол |
+|Женский|`r  data.frame(round(prop.table(table(dfRadBillat1$Gender))*100,2))[1,2]`% (`r data.frame(table(dfRadBillat1$Gender))[1,2]`/`r length(dfRadBillat1$Gender)` случаев) [95% ДИ: `r round(prop.test(table(dfRadBillat1$Gender)[1], length(dfRadBillat1$Gender))$conf.int[1],2)`; `r round(prop.test(table(dfRadBillat1$Gender)[1], length(dfRadBillat1$Gender))$conf.int[2],2)`]|
+|Мужской|`r data.frame(round(prop.table(table(dfRadBillat1$Gender))*100,2))[2,2]`% (`r data.frame(table(dfRadBillat1$Gender))[2,2]`/`r length(dfRadBillat1$Gender)` случаев) [95% ДИ: `r round(prop.test(table(dfRadBillat1$Gender)[2], length(dfRadBillat1$Gender))$conf.int[1],2)`; `r round(prop.test(table(dfRadBillat1$Gender)[2], length(dfRadBillat1$Gender))$conf.int[2],2)`]|
+| Тип активности |
+|Смешанный|`r  data.frame(round(prop.table(table(dfRadBillat1$Type_action))*100,2))[1,2]`% (`r data.frame(table(dfRadBillat1$Type_action))[1,2]`/`r length(dfRadBillat1$Type_action)` случаев) [95% ДИ: `r round(prop.test(table(dfRadBillat1$Type_action)[1], length(dfRadBillat1$Type_action))$conf.int[1],2)`; `r round(prop.test(table(dfRadBillat1$Type_action)[1], length(dfRadBillat1$Type_action))$conf.int[2],2)`]|
+|Ручной|`r data.frame(round(prop.table(table(dfRadBillat1$Type_action))*100,2))[2,2]`% (`r data.frame(table(dfRadBillat1$Type_action))[2,2]`/`r length(dfRadBillat1$Type_action)` случаев) [95% ДИ: `r round(prop.test(table(dfRadBillat1$Type_action)[2], length(dfRadBillat1$Type_action))$conf.int[1],2)`; `r round(prop.test(table(dfRadBillat1$Type_action)[2], length(dfRadBillat1$Type_action))$conf.int[2],2)`]|
+
 
 ## 2.3. Второй этап экспериментальной части исследования
+В второй части экспериментального исследования проводилось определение точности переноса данных с помощью индивидуального напечатанного шаблона направителя. В исследование вошли `r length(dfRadProt1$Name)`( `r length(dfRadProt1$Name)` верхних конечностей) с диагнозом "Посттравматическая деформация дистального метаэпифиза лучевой кости" без оперативного вмешательства в данной области. Средний период после травмы пациентов, вошедших в исследование, составил `r round(mean(dfRadProt1$Month),2)`±`r round(sd(dfRadProt1$Month),2)` месяцев, минимальный срок составил `r min(dfRadProt1$Month)` месяца, масимальный - `r max(dfRadProt1$Month)` месяца.  По анамнезу все пациенты проходили консервативное лечение с использованием метододов закрытой ручной репозиции и последующей иммодилизаций верхней трети предплнчья со средним сроком 6-8 недель. Все пациентам было предложено поучаствовать в исследовании добровольно. Все пациентам была выполнена МСКТ дистального отдела предплечья с двух сторон. На основании данных МСКТ, а имеено файлов в формате (.DICOM) [ссылка описание МСКТ], было выполнено виртуальное планирование остеотомии 
+
+Медиана по возрасту пациентов, вошедших в исследование, составила `r round(median(dfRadProt1$Age),2)` [Q1-Q3: `r round(summary(dfRadProt1$Age, na.rm = TRUE)[2],2)`; `r round(summary(dfRadProt1$Age, na.rm = TRUE)[5],2)`] лет. Процентная доля женщин составила `r  data.frame(round(prop.table(table(dfRadProt1$Gender))*100,2))[1,2]`% (`r data.frame(table(dfRadProt1$Gender))[1,2]`/`r length(dfRadProt1$Gender)` случаев) [95% ДИ: `r round(prop.test(table(dfRadProt1$Gender)[1], length(dfRadProt1$Gender))$conf.int[1],2)`; `r round(prop.test(table(dfRadProt1$Gender)[1], length(dfRadProt1$Gender))$conf.int[2],2)`], мужчин было `r  data.frame(round(prop.table(table(dfRadProt1$Gender))*100,2))[2,2]`% (`r data.frame(table(dfRadProt1$Gender))[2,2]`/`r length(dfRadProt1$Gender)` случаев) [95% ДИ: `r round(prop.test(table(dfRadProt1$Gender)[2], length(dfRadProt1$Gender))$conf.int[1],2)`; `r round(prop.test(table(dfRadProt1$Gender)[2], length(dfRadProt1$Gender))$conf.int[2],2)`]. Процентная доля пацинтов с поражением левой стороный была `r  data.frame(round(prop.table(table(dfRadProt1$Side))*100,2))[1,2]`% (`r data.frame(table(dfRadProt1$Side))[1,2]`/`r length(dfRadProt1$Side)` случаев) [95% ДИ: `r round(prop.test(table(dfRadProt1$Side)[1], length(dfRadProt1$Side))$conf.int[1],2)`; `r round(prop.test(table(dfRadProt1$Side)[1], length(dfRadProt1$Side))$conf.int[2],2)`], правой было `r  data.frame(round(prop.table(table(dfRadProt1$Side))*100,2))[2,2]`% (`r data.frame(table(dfRadProt1$Side))[2,2]`/`r length(dfRadProt1$Side)` случаев) [95% ДИ: `r round(prop.test(table(dfRadProt1$Side)[2], length(dfRadProt1$Side))$conf.int[1],2)`; `r round(prop.test(table(dfRadProt1$Side)[2], length(dfRadProt1$Side))$conf.int[2],2)`]. Пацинтов у котрых была доминирующая рука была левая было `r  data.frame(round(prop.table(table(dfRadProt1$Dominant_hand))*100,2))[1,2]`% (`r data.frame(table(dfRadProt1$Dominant_hand))[1,2]`/`r length(dfRadProt1$Dominant_hand)` случаев) [95% ДИ: `r round(prop.test(table(dfRadProt1$Dominant_hand)[1], length(dfRadProt1$Dominant_hand))$conf.int[1],2)`; `r round(prop.test(table(dfRadProt1$Dominant_hand)[1], length(dfRadProt1$Dominant_hand))$conf.int[2],2)`], правая `r  data.frame(round(prop.table(table(dfRadProt1$Dominant_hand))*100,2))[2,2]`% (`r data.frame(table(dfRadProt1$Dominant_hand))[2,2]`/`r length(dfRadProt1$Dominant_hand)` случаев) [95% ДИ: `r round(prop.test(table(dfRadProt1$Dominant_hand)[2], length(dfRadProt1$Dominant_hand))$conf.int[1],2)`; `r round(prop.test(table(dfRadProt1$Dominant_hand)[2], length(dfRadProt1$Dominant_hand))$conf.int[2],2)`]. Повреждение доминирующей руки было в `r  data.frame(round(prop.table(table(dfRadProt1$Damage_dominant_hand))*100,2))[1,2]`% (`r data.frame(table(dfRadProt1$Damage_dominant_hand))[1,2]`/`r length(dfRadProt1$Damage_dominant_hand)` случаев) [95% ДИ: `r round(prop.test(table(dfRadProt1$Damage_dominant_hand)[1], length(dfRadProt1$Damage_dominant_hand))$conf.int[1],2)`; `r round(prop.test(table(dfRadProt1$Damage_dominant_hand)[1], length(dfRadProt1$Damage_dominant_hand))$conf.int[2],2)`], недоминирующей руки `r  data.frame(round(prop.table(table(dfRadProt1$Damage_dominant_hand))*100,2))[2,2]`% (`r data.frame(table(dfRadProt1$Damage_dominant_hand))[2,2]`/`r length(dfRadProt1$Damage_dominant_hand)` случаев) [95% ДИ: `r round(prop.test(table(dfRadProt1$Damage_dominant_hand)[2], length(dfRadProt1$Damage_dominant_hand))$conf.int[1],2)`; `r round(prop.test(table(dfRadProt1$Damage_dominant_hand)[2], length(dfRadProt1$Damage_dominant_hand))$conf.int[2],2)`]. Дорсальный тип деформации встречалась в `r  data.frame(round(prop.table(table(dfRadProt1$Type_deformation))*100,2))[1,2]`% (`r data.frame(table(dfRadProt1$Type_deformation))[1,2]`/`r length(dfRadProt1$Type_deformation)` случаев) [95% ДИ: `r round(prop.test(table(dfRadProt1$Type_deformation)[1], length(dfRadProt1$Type_deformation))$conf.int[1],2)`; `r round(prop.test(table(dfRadProt1$Type_deformation)[1], length(dfRadProt1$Type_deformation))$conf.int[2],2)`], ладонный было `r  data.frame(round(prop.table(table(dfRadProt1$Type_deformation))*100,2))[2,2]`% (`r data.frame(table(dfRadProt1$Type_deformation))[2,2]`/`r length(dfRadProt1$Type_deformation)` случаев) [95% ДИ: `r round(prop.test(table(dfRadProt1$Type_deformation)[2], length(dfRadProt1$Type_deformation))$conf.int[1],2)`; `r round(prop.test(table(dfRadProt1$Type_deformation)[2], length(dfRadProt1$Type_deformation))$conf.int[2],2)`].
+Основные показатели указаны в таблице 2.n.
+
+Таблица 2.n. Описание показателей возраста, пола, стороны поражения, поражения доминирующей руки, тип деформации. Пример записи: процент от выборки % ( количество случаев / общее количество  случаев)* [95% доверительный интервал]
+
+
+| Показатель | Заначение                                                             |
+|----------------|-----------------------------------|
+| возраст    |`r round(median(dfRadProt1$Age),2)` [Q1-Q3: `r round(summary(dfRadProt1$Age, na.rm = TRUE)[2],2)`; `r round(summary(dfRadProt1$Age, na.rm = TRUE)[5],2)`] лет|
+| Пол    |
+| женский    |`r  data.frame(round(prop.table(table(dfRadProt1$Gender))*100,2))[1,2]`% (`r data.frame(table(dfRadProt1$Gender))[1,2]`/`r length(dfRadProt1$Gender)` случаев) [95% ДИ: `r round(prop.test(table(dfRadProt1$Gender)[1], length(dfRadProt1$Gender))$conf.int[1],2)`; `r round(prop.test(table(dfRadProt1$Gender)[1], length(dfRadProt1$Gender))$conf.int[2],2)`] |
+| мужской    | `r  data.frame(round(prop.table(table(dfRadProt1$Gender))*100,2))[2,2]`% (`r data.frame(table(dfRadProt1$Gender))[2,2]`/`r length(dfRadProt1$Gender)` случаев) [95% ДИ: `r round(prop.test(table(dfRadProt1$Gender)[2], length(dfRadProt1$Gender))$conf.int[1],2)`; `r round(prop.test(table(dfRadProt1$Gender)[2], length(dfRadProt1$Gender))$conf.int[2],2)`] |
+| Сторона поражения    |
+| левая    |`r  data.frame(round(prop.table(table(dfRadProt1$Side))*100,2))[1,2]`% (`r data.frame(table(dfRadProt1$Side))[1,2]`/`r length(dfRadProt1$Side)` случаев) [95% ДИ: `r round(prop.test(table(dfRadProt1$Side)[1], length(dfRadProt1$Side))$conf.int[1],2)`; `r round(prop.test(table(dfRadProt1$Side)[1], length(dfRadProt1$Side))$conf.int[2],2)`] |
+| правая    |`r  data.frame(round(prop.table(table(dfRadProt1$Side))*100,2))[2,2]`% (`r data.frame(table(dfRadProt1$Side))[2,2]`/`r length(dfRadProt1$Side)` случаев) [95% ДИ: `r round(prop.test(table(dfRadProt1$Side)[2], length(dfRadProt1$Side))$conf.int[1],2)`; `r round(prop.test(table(dfRadProt1$Side)[2], length(dfRadProt1$Side))$conf.int[2],2)`] |
+| Доминирующая рука    |
+| левая    |`r  data.frame(round(prop.table(table(dfRadProt1$Dominant_hand))*100,2))[1,2]`% (`r data.frame(table(dfRadProt1$Dominant_hand))[1,2]`/`r length(dfRadProt1$Dominant_hand)` случаев) [95% ДИ: `r round(prop.test(table(dfRadProt1$Dominant_hand)[1], length(dfRadProt1$Dominant_hand))$conf.int[1],2)`; `r round(prop.test(table(dfRadProt1$Dominant_hand)[1], length(dfRadProt1$Dominant_hand))$conf.int[2],2)`] |
+| правая    |`r  data.frame(round(prop.table(table(dfRadProt1$Dominant_hand))*100,2))[2,2]`% (`r data.frame(table(dfRadProt1$Dominant_hand))[2,2]`/`r length(dfRadProt1$Dominant_hand)` случаев) [95% ДИ: `r round(prop.test(table(dfRadProt1$Dominant_hand)[2], length(dfRadProt1$Dominant_hand))$conf.int[1],2)`; `r round(prop.test(table(dfRadProt1$Dominant_hand)[2], length(dfRadProt1$Dominant_hand))$conf.int[2],2)`] |
+| Повреждение доминирующая рука    |
+| да    | `r  data.frame(round(prop.table(table(dfRadProt1$Damage_dominant_hand))*100,2))[1,2]`% (`r data.frame(table(dfRadProt1$Damage_dominant_hand))[1,2]`/`r length(dfRadProt1$Damage_dominant_hand)` случаев) [95% ДИ: `r round(prop.test(table(dfRadProt1$Damage_dominant_hand)[1], length(dfRadProt1$Damage_dominant_hand))$conf.int[1],2)`; `r round(prop.test(table(dfRadProt1$Damage_dominant_hand)[1], length(dfRadProt1$Damage_dominant_hand))$conf.int[2],2)`] |
+| нет    |`r  data.frame(round(prop.table(table(dfRadProt1$Damage_dominant_hand))*100,2))[2,2]`% (`r data.frame(table(dfRadProt1$Damage_dominant_hand))[2,2]`/`r length(dfRadProt1$Damage_dominant_hand)` случаев) [95% ДИ: `r round(prop.test(table(dfRadProt1$Damage_dominant_hand)[2], length(dfRadProt1$Damage_dominant_hand))$conf.int[1],2)`; `r round(prop.test(table(dfRadProt1$Damage_dominant_hand)[2], length(dfRadProt1$Damage_dominant_hand))$conf.int[2],2)`] |
+| Тип деформации   |
+| дорсальная    | `r  data.frame(round(prop.table(table(dfRadProt1$Type_deformation))*100,2))[1,2]`% (`r data.frame(table(dfRadProt1$Type_deformation))[1,2]`/`r length(dfRadProt1$Type_deformation)` случаев) [95% ДИ: `r round(prop.test(table(dfRadProt1$Type_deformation)[1], length(dfRadProt1$Type_deformation))$conf.int[1],2)`; `r round(prop.test(table(dfRadProt1$Type_deformation)[1], length(dfRadProt1$Type_deformation))$conf.int[2],2)`]|
+| ладонная    | `r  data.frame(round(prop.table(table(dfRadProt1$Type_deformation))*100,2))[2,2]`% (`r data.frame(table(dfRadProt1$Type_deformation))[2,2]`/`r length(dfRadProt1$Type_deformation)` случаев) [95% ДИ: `r round(prop.test(table(dfRadProt1$Type_deformation)[2], length(dfRadProt1$Type_deformation))$conf.int[1],2)`; `r round(prop.test(table(dfRadProt1$Type_deformation)[2], length(dfRadProt1$Type_deformation))$conf.int[2],2)`] |
 
 ## 3.3. Клиническая часть исследования
+
+
+
+###3.3.n Описание всей выборки
+
+Процентная доля первой группы от общего числа исследуемых составила 54.17% (26/48случаев)[95% ДИ 0.39;0.68], второй группы 45.83% (22/48случаев)[95% ДИ 0.32;0.61].
+
+Процентная доля женский составила 75% (36/48случаев)[95% ДИ 0.6;0.86], мужчин было 25% (12/48случаев)[95% ДИ 0.14;0.4].
+
+процент повреждения левой руки составил 43.75% (21/48случаев)[95% ДИ 0.3;0.59], правой - 56.25% (27/48случаев)[95% ДИ 0.41;0.7].
+
+Левая как доминирующая рука было у 35.42% (17/48случаев)[95% ДИ 0.23;0.51], правая была у 64.58% (31/48случаев)[95% ДИ 0.49;0.77].
+
+Повреждение доминирующей руки было в 87.5% (42/48случаев)[95% ДИ 0.74;0.95], недоминрующая рука была повреждена в 12.5% (6/48случаев)[95% ДИ 0.05;0.26].
+
+Дорсальный тип деформации былл в 56.25% (27/48случаев)[95% ДИ 0.41;0.7], ладонный тип деформации -  43.75% (21/48случаев)[95% ДИ 0.3;0.59].
+
+Смшенный тип труда был предсвлен у 66.67% (32/48случаев)[95% ДИ 0.51;0.79], ручной тип труда был у 33.33% (16/48случаев)[95% ДИ 0.21;0.49].
+По вышеуказанным показателям не было обнаружено статистически значимых различий, пациенты были распределены равномерно.
+
+
+Качественные показатели всей выборки указаны в таблице 2.n.
+
+| Показатель | Заначение                                                             |
+|----------------|-----------------------------------|
+|Группа|
+|Первая| |
+|Вторая| |
+|Пол|
+|Женский| |
+|Мужской| |
 
 ## 3.4
